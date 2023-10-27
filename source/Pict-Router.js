@@ -28,29 +28,51 @@ class PictRouter extends libPictViewClass
 		}
 	}
 
-	onChange(pRoute)
+	onBeforeChange(pRoute)
 	{
-		// Whenever the route is changed, push it to the history object.
-		this.VisitedRoutes.push(pRoute.data[0].render(pRoute.params, pRoute.query));
+
+	}
+
+	change(pRoute)
+	{
+		this.onBeforeChange(pRoute);
+		// Render the route (usually renderDefault but the developer could pass their own function in)
+		pRoute.render(pRoute);
 		if (this.pict.LogNoisiness > 3)
 		{
 			this.log.trace(`Route changed to [${pRoute.query}]`);
 		}
+		this.onChange(pRoute);
+		// After the route is changed, push it to the history object.
+		this.VisitedRoutes.push(pRoute.url);
+		this.onAfterChange(pRoute);
 	}
 
-	renderDefault(pParameters, pQuery, pHash)
+	onChange(pRoute)
+	{
+		// This is what the developer is expected to override; it fires *after* any route is changed
+	}
+
+	onAfterChange(pRoute)
+	{
+
+	}
+
+	renderDefault(pRoute)
 	{
 		if (this.pict.LogNoisiness > 3)
 		{
-			this.log.trace(`Pict::Router [${this.UUID}] Default Render function called; no override or function passed in for the route.  Hash [${pHash}] Query [${pQuery}] Parameters [${JSON.stringify(pParameters)}]`, pParameters);
+			this.log.trace(`Pict::Router [${this.UUID}] Render function called; no override or function passed in for the route.  URL [${pRoute.url}]`);
 		}
 
-		return this.onRenderDefault(pParameters, pQuery, pHash);
+		return this.onRenderDefault(pRoute);
 	}
 
-	onRenderDefault(pParameters, pQuery, pHash)
+	onRenderDefault(pRoute)
 	{
-		// This is what the developer is expected to override
+		// This is what the developer is expected to override; it is the route render method.
+		// A second pattern space router supports is putting render  on the Routes array itself.
+		return true;
 	}
 
 	onInitialize()
@@ -73,7 +95,7 @@ class PictRouter extends libPictViewClass
 		}
 
 		this._router = libSpaceRouter.createRouter(tmpSpaceRouterOptionsObject);
-		this._routerDispose = this._router.listen(this.options.Routes, this.onChange.bind(this));
+		this._routerDispose = this._router.listen(this.options.Routes, this.change.bind(this));
 	}
 }
 
