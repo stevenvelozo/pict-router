@@ -1,0 +1,51 @@
+{
+    "name": "pict-router",
+    "version": "1.0.0",
+    "description": "Pict Router",
+    "main": "source/Pict-Router.js",
+    "scripts": {
+        "start": "node source/Pict-Router.js",
+        "test": "npx mocha -u tdd -R spec",
+        "tests": "npx mocha -u tdd --exit -R spec --grep",
+        "coverage": "npx nyc --reporter=lcov --reporter=text-lcov ./node_modules/mocha/bin/_mocha -- -u tdd -R spec",
+        "build": "npx quack build",
+        "docker-dev-build": "docker build ./ -f Dockerfile_LUXURYCode -t pict-router-image:local",
+        "docker-dev-run": "docker run -it -d --name pict-router-dev -p 28521:8080 -p 41369:8086 -v \"$PWD/.config:/home/coder/.config\"  -v \"$PWD:/home/coder/pict-router\" -u \"$(id -u):$(id -g)\" -e \"DOCKER_USER=$USER\" pict-router-image:local",
+        "docker-dev-shell": "docker exec -it pict-router-dev /bin/bash"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stevenvelozo/pict-router.git"
+    },
+    "author": "steven velozo <steven@velozo.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/stevenvelozo/pict-router/issues"
+    },
+    "homepage": "https://github.com/stevenvelozo/pict-router#readme",
+    "dependencies": {
+        "pict-view": "^1.0.31",
+        "space-router": "^0.9.1"
+    },
+    "devDependencies": {
+        "quackage": "^1.0.22"
+    },
+    "mocha": {
+        "diff": true,
+        "extension": [
+            "js"
+        ],
+        "package": "./package.json",
+        "reporter": "spec",
+        "slow": "75",
+        "timeout": "5000",
+        "ui": "tdd",
+        "watch-files": [
+            "source/**/*.js",
+            "test/**/*.js"
+        ],
+        "watch-ignore": [
+            "lib/vendor"
+        ]
+    }
+}
