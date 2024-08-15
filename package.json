@@ -1,6 +1,6 @@
 {
     "name": "pict-router",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Pict Router",
     "main": "source/Pict-Router.js",
     "scripts": {
@@ -28,7 +28,7 @@
         "pict-provider": "^1.0.2"
     },
     "devDependencies": {
-        "quackage": "^1.0.22"
+        "quackage": "^1.0.33"
     },
     "mocha": {
         "diff": true,
