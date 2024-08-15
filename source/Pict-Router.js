@@ -1,104 +1,97 @@
-const libPictViewClass = require('pict-view');
+const libPictProvider = require('pict-provider');
+const libNavigo = require('navigo');
 
-// # The open source SpaceRouter library
-// # >SITE:  https://kidkarolis.github.io/space-router/
-// # >GIT:   https://github.com/KidkArolis/space-router
-const libSpaceRouter = require('space-router');
+const _DEFAULT_PROVIDER_CONFIGURATION =
+{
+	ProviderIdentifier: 'Pict-Router',
 
-class PictRouter extends libPictViewClass
+	AutoInitialize: true,
+	AutoInitializeOrdinal: 0
+}
+
+class PictRouter extends libPictProvider
 {
 	constructor(pFable, pOptions, pServiceHash)
 	{
-		let tmpOptions = Object.assign({}, require('./Pict-Router-DefaultConfiguration.json'), pOptions);
+		let tmpOptions = Object.assign({}, _DEFAULT_PROVIDER_CONFIGURATION, pOptions);
 		super(pFable, tmpOptions, pServiceHash);
 
-		this.VisitedRoutes = [];
+		// Initialize the navigo router and set the base path to '/'
+		this.router = new libNavigo('/', { hash: true });
 
-		if ((typeof(this.options.Routes) != 'object') || !Array.isArray(this.options.Routes))
+		if (this.options.Routes)
 		{
-			this.log.warn(`The Routes option is not an object or object is not an array; creating default route object`);
-			this.options.Routes = [];
-		}
-
-		// Space router expects one of `memory`, `history` or `hash` as the mode.
-		// The "history" mode only works in the browser.
-		if (typeof(this.options.RouterMode) != 'string')
-		{
-			this.options.RouterMode = 'history';
-		}
-	}
-
-	onBeforeChange(pRoute)
-	{
-
-	}
-
-	change(pRoute)
-	{
-		this.onBeforeChange(pRoute);
-		// Render the route (usually renderDefault but the developer could pass their own function in)
-		pRoute.render(pRoute);
-		if (this.pict.LogNoisiness > 3)
-		{
-			this.log.trace(`Route changed to [${pRoute.query}]`);
-		}
-		this.onChange(pRoute);
-		// After the route is changed, push it to the history object.
-		this.VisitedRoutes.push(pRoute.url);
-		this.onAfterChange(pRoute);
-	}
-
-	onChange(pRoute)
-	{
-		// This is what the developer is expected to override; it fires *after* any route is changed
-	}
-
-	onAfterChange(pRoute)
-	{
-
-	}
-
-	renderDefault(pRoute)
-	{
-		if (this.pict.LogNoisiness > 3)
-		{
-			this.log.trace(`Pict::Router [${this.UUID}] Render function called; no override or function passed in for the route.  URL [${pRoute.url}]`);
-		}
-
-		return this.onRenderDefault(pRoute);
-	}
-
-	onRenderDefault(pRoute)
-	{
-		// This is what the developer is expected to override; it is the route render method.
-		// A second pattern space router supports is putting render  on the Routes array itself.
-		return true;
-	}
-
-	onInitialize()
-	{
-		// Check all routes and make sure they have the right function
-		for (let i = 0; i < this.options.Routes.length; i++)
-		{
-			let tmpRoute = this.options.Routes[i];
-			if (typeof(tmpRoute.render) != 'function')
+			for (let i = 0; i < this.options.Routes.length; i++)
 			{
-				tmpRoute.render = this.renderDefault.bind(this);
+				if (this.options.Routes[i].path && this.options.Routes[i].template)
+				{
+					this.addRoute(this.options.Routes[i].path, this.options.Routes[i].template);
+				}
+				else if (this.options.Routes[i].path && this.options.Routes[i].render)
+				{
+					this.addRoute(this.options.Routes[i].path, this.options.Routes[i].render);
+				}
+				else
+				{
+					this.pict.log.warn(`Route ${i} is missing a render function or template string.`);
+				}
 			}
 		}
 
-		let tmpSpaceRouterOptionsObject = {};
+		// This is the route to render after load
+		this.afterPersistView = '/Manyfest/Overview';
+	}
 
-		if (this.options.RouterMode)
+	get currentScope()
+	{
+		return this.AppData?.ManyfestRecord?.Scope ?? 'Default';
+	}
+
+	forwardToScopedRoute(pData)
+	{
+		this.navigate(`${pData.url}/${this.currentScope}`);
+	}
+
+	onInitializeAsync(fCallback)
+	{
+		return super.onInitializeAsync(fCallback);
+	}
+
+	/**
+	 * Add a route to the router.
+	 */
+	addRoute(pRoute, pRenderable)
+	{
+		if (typeof(pRenderable) === 'function')
 		{
-			tmpSpaceRouterOptionsObject.mode = this.options.RouterMode;
+			this.router.on(pRoute, pRenderable);
 		}
+		else if (typeof(pRenderable) === 'string')
+		{
+			// Run this as a template, allowing some whack things with functions in template expressions.
+			this.router.on(pRoute, 
+				(pData) => 
+				{
+					this.pict.parseTemplate(pRenderable, pData, null, this.pict)
+				});
+		}
+		else
+		{
+			// renderable isn't usable!
+			this.pict.log.warn(`Route ${pRoute} has an invalid renderable.`);
+		}
+	}
 
-		this._router = libSpaceRouter.createRouter(tmpSpaceRouterOptionsObject);
-		this._routerDispose = this._router.listen(this.options.Routes, this.change.bind(this));
+	/**
+	 * Navigate to a given route (set the browser URL string, add to history, trigger router)
+	 * 
+	 * @param {string} pRoute - The route to navigate to
+	 */
+	navigate(pRoute)
+	{
+		this.router.navigate(pRoute);
 	}
 }
 
 module.exports = PictRouter;
-
-module.exports.default_configuration = require('./Pict-Router-DefaultConfiguration.json');
+module.exports.default_configuration = _DEFAULT_PROVIDER_CONFIGURATION;

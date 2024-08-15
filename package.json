@@ -24,8 +24,8 @@
     },
     "homepage": "https://github.com/stevenvelozo/pict-router#readme",
     "dependencies": {
-        "pict-view": "^1.0.31",
-        "space-router": "^0.9.1"
+        "navigo": "^8.11.1",
+        "pict-provider": "^1.0.2"
     },
     "devDependencies": {
         "quackage": "^1.0.22"
