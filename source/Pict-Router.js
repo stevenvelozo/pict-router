@@ -1,5 +1,6 @@
 const libPictProvider = require('pict-provider');
 const libNavigo = require('navigo');
+const {ResolveOptions} = require("navigo");
 
 const _DEFAULT_PROVIDER_CONFIGURATION =
 {
@@ -65,6 +66,7 @@ class PictRouter extends libPictProvider
 		if (typeof(pRenderable) === 'function')
 		{
 			this.router.on(pRoute, pRenderable);
+			this.resolve();
 		}
 		else if (typeof(pRenderable) === 'string')
 		{
@@ -74,6 +76,7 @@ class PictRouter extends libPictProvider
 				{
 					this.pict.parseTemplate(pRenderable, pData, null, this.pict)
 				});
+			this.resolve();
 		}
 		else
 		{
@@ -90,6 +93,14 @@ class PictRouter extends libPictProvider
 	navigate(pRoute)
 	{
 		this.router.navigate(pRoute);
+	}
+
+	/**
+	 * Trigger the router resolving logic
+	 *
+	 */
+	resolve() {
+		this.router.resolve();
 	}
 }
 
