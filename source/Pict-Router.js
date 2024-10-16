@@ -1,6 +1,5 @@
 const libPictProvider = require('pict-provider');
 const libNavigo = require('navigo');
-const {ResolveOptions} = require("navigo");
 
 const _DEFAULT_PROVIDER_CONFIGURATION =
 {
