@@ -65,6 +65,7 @@ class PictRouter extends libPictProvider
 		if (typeof(pRenderable) === 'function')
 		{
 			this.router.on(pRoute, pRenderable);
+			this.resolve();
 		}
 		else if (typeof(pRenderable) === 'string')
 		{
@@ -74,6 +75,7 @@ class PictRouter extends libPictProvider
 				{
 					this.pict.parseTemplate(pRenderable, pData, null, this.pict)
 				});
+			this.resolve();
 		}
 		else
 		{
@@ -90,6 +92,14 @@ class PictRouter extends libPictProvider
 	navigate(pRoute)
 	{
 		this.router.navigate(pRoute);
+	}
+
+	/**
+	 * Trigger the router resolving logic
+	 *
+	 */
+	resolve() {
+		this.router.resolve();
 	}
 }
 
