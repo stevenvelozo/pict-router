@@ -1,6 +1,6 @@
 {
     "name": "pict-router",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Pict Router",
     "main": "source/Pict-Router.js",
     "scripts": {
