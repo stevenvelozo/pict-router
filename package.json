@@ -9,9 +9,8 @@
         "tests": "npx mocha -u tdd --exit -R spec --grep",
         "coverage": "npx nyc --reporter=lcov --reporter=text-lcov ./node_modules/mocha/bin/_mocha -- -u tdd -R spec",
         "build": "npx quack build",
-        "docker-dev-build": "docker build ./ -f Dockerfile_LUXURYCode -t pict-router-image:local",
-        "docker-dev-run": "docker run -it -d --name pict-router-dev -p 28521:8080 -p 41369:8086 -v \"$PWD/.config:/home/coder/.config\"  -v \"$PWD:/home/coder/pict-router\" -u \"$(id -u):$(id -g)\" -e \"DOCKER_USER=$USER\" pict-router-image:local",
-        "docker-dev-shell": "docker exec -it pict-router-dev /bin/bash"
+        "lint": "eslint source/**",
+        "types": "npx -p typescript tsc -p . --outDir types"
     },
     "repository": {
         "type": "git",
@@ -28,7 +27,12 @@
         "pict-provider": "^1.0.2"
     },
     "devDependencies": {
-        "quackage": "^1.0.33"
+        "@eslint/js": "^9.14.0",
+        "browser-env": "^3.3.0",
+        "eslint": "^9.14.0",
+        "jquery": "^3.7.1",
+        "quackage": "^1.0.33",
+        "typescript": "^5.6.3"
     },
     "mocha": {
         "diff": true,

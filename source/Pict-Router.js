@@ -95,10 +95,11 @@ class PictRouter extends libPictProvider
 	}
 
 	/**
-	 * Trigger the router resolving logic
+	 * Trigger the router resolving logic; this is expected to be called after all routes are added (to go to the default route).
 	 *
 	 */
-	resolve() {
+	resolve()
+	{
 		this.router.resolve();
 	}
 }
