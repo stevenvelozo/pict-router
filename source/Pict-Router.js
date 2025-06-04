@@ -17,7 +17,7 @@ class PictRouter extends libPictProvider
 		super(pFable, tmpOptions, pServiceHash);
 
 		// Initialize the navigo router and set the base path to '/'
-		this.router = new libNavigo('/', { hash: true });
+		this.router = new libNavigo('/', { strategy: 'ONE', hash: true });
 
 		if (this.options.Routes)
 		{

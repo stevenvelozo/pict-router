@@ -1,6 +1,6 @@
 {
     "name": "pict-router",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Pict Router",
     "main": "source/Pict-Router.js",
     "scripts": {
@@ -24,14 +24,14 @@
     "homepage": "https://github.com/stevenvelozo/pict-router#readme",
     "dependencies": {
         "navigo": "^8.11.1",
-        "pict-provider": "^1.0.2"
+        "pict-provider": "^1.0.3"
     },
     "devDependencies": {
         "@eslint/js": "^9.14.0",
         "browser-env": "^3.3.0",
         "eslint": "^9.14.0",
         "jquery": "^3.7.1",
-        "quackage": "^1.0.33",
+        "quackage": "^1.0.41",
         "typescript": "^5.6.3"
     },
     "mocha": {
