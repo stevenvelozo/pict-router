@@ -24,14 +24,14 @@
     "homepage": "https://github.com/stevenvelozo/pict-router#readme",
     "dependencies": {
         "navigo": "^8.11.1",
-        "pict-provider": "^1.0.3"
+        "pict-provider": "^1.0.7"
     },
     "devDependencies": {
         "@eslint/js": "^9.14.0",
         "browser-env": "^3.3.0",
         "eslint": "^9.14.0",
         "jquery": "^3.7.1",
-        "quackage": "^1.0.41",
+        "quackage": "^1.0.48",
         "typescript": "^5.6.3"
     },
     "mocha": {
