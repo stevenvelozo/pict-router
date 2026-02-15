@@ -1,0 +1,26 @@
+{
+	"ProviderIdentifier": "Pict-Router",
+
+	"AutoInitialize": true,
+	"AutoInitializeOrdinal": 0,
+
+	"Routes":
+	[
+		{
+			"path": "/Home",
+			"template": "{~LV:Pict.PictApplication.showView(`RoutedApp-Home`)~}"
+		},
+		{
+			"path": "/About",
+			"template": "{~LV:Pict.PictApplication.showView(`RoutedApp-About`)~}"
+		},
+		{
+			"path": "/Contact",
+			"template": "{~LV:Pict.PictApplication.showView(`RoutedApp-Contact`)~}"
+		},
+		{
+			"path": "/Items/:ItemId",
+			"template": "{~LV:Pict.PictApplication.showItem(Record.data.ItemId)~}"
+		}
+	]
+}
