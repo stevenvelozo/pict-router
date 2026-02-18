@@ -130,10 +130,16 @@ Run with coverage:
 npm run coverage
 ```
 
+## Related Packages
+
+- [pict](https://github.com/stevenvelozo/pict) - MVC application framework
+- [pict-provider](https://github.com/stevenvelozo/pict-provider) - Data provider base class
+- [fable](https://github.com/stevenvelozo/fable) - Application services framework
+
 ## License
 
-MIT - See [LICENSE](LICENSE) for details.
+MIT
 
-## Author
+## Contributing
 
-Steven Velozo - [steven@velozo.com](mailto:steven@velozo.com)
+Pull requests are welcome. For details on our code of conduct, contribution process, and testing requirements, see the [Retold Contributing Guide](https://github.com/stevenvelozo/retold/blob/main/docs/contributing.md).
