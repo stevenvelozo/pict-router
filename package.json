@@ -1,6 +1,6 @@
 {
     "name": "pict-router",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Pict Router",
     "main": "source/Pict-Router.js",
     "scripts": {
@@ -24,7 +24,7 @@
     "homepage": "https://github.com/stevenvelozo/pict-router#readme",
     "dependencies": {
         "navigo": "^8.11.1",
-        "pict-provider": "^1.0.10"
+        "pict-provider": "^1.0.12"
     },
     "devDependencies": {
         "@eslint/js": "^9.14.0",
