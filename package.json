@@ -7,7 +7,7 @@
         "start": "node source/Pict-Router.js",
         "test": "npx mocha -u tdd -R spec",
         "tests": "npx mocha -u tdd --exit -R spec --grep",
-        "coverage": "npx nyc --reporter=lcov --reporter=text-lcov ./node_modules/mocha/bin/_mocha -- -u tdd -R spec",
+        "coverage": "npx quack coverage",
         "build": "npx quack build",
         "lint": "eslint source/**",
         "types": "npx -p typescript tsc -p . --outDir types"
