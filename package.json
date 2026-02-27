@@ -31,7 +31,7 @@
         "browser-env": "^3.3.0",
         "eslint": "^9.14.0",
         "jquery": "^3.7.1",
-        "quackage": "^1.0.58",
+        "quackage": "^1.0.59",
         "typescript": "^5.6.3"
     },
     "mocha": {
