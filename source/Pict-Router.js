@@ -65,22 +65,30 @@ class PictRouter extends libPictProvider
 		if (typeof(pRenderable) === 'function')
 		{
 			this.router.on(pRoute, pRenderable);
-			this.resolve();
 		}
 		else if (typeof(pRenderable) === 'string')
 		{
 			// Run this as a template, allowing some whack things with functions in template expressions.
-			this.router.on(pRoute, 
-				(pData) => 
+			this.router.on(pRoute,
+				(pData) =>
 				{
 					this.pict.parseTemplate(pRenderable, pData, null, this.pict)
 				});
-			this.resolve();
 		}
 		else
 		{
 			// renderable isn't usable!
 			this.pict.log.warn(`Route ${pRoute} has an invalid renderable.`);
+			return;
+		}
+
+		// By default, resolve after each route is added (legacy behavior).
+		// Applications can set pict.settings.RouterSkipRouteResolveOnAdd = true
+		// to skip this and call resolve() explicitly after the DOM is ready,
+		// which prevents premature route resolution before views are rendered.
+		if (!this.pict.settings.RouterSkipRouteResolveOnAdd)
+		{
+			this.resolve();
 		}
 	}
 

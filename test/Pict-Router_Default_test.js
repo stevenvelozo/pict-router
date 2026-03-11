@@ -1,10 +1,6 @@
 /*
-	Basic Unit tests for Pict Router
+	Unit tests for Pict Router
 */
-
-// This is temporary, but enables unit tests
-//const libBrowserEnv = require('browser-env')
-//libBrowserEnv();
 
 const Chai = require('chai');
 const Expect = Chai.expect;
@@ -15,14 +11,14 @@ const libPictRouter = require(`../source/Pict-Router.js`);
 
 suite
 (
-	`Basic Pict Router tests`,
+	`Pict Router tests`,
 	() =>
 	{
 		setup(() => { });
 
 		suite
 			(
-				'Basic Tests',
+				'Construction',
 				() =>
 				{
 					test(
@@ -30,67 +26,181 @@ suite
 							(fDone) =>
 							{
 								let tmpPict = new libPict();
-								// Initialize the environment
 								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
-								// Create the application
 								let tmpPictApplication = tmpPict.addApplication();
-								// Add the router provider
 								let tmpPictRouter = tmpPict.addProvider('PictRouter', {RouterMode: 'memory'}, libPictRouter);
 								Expect(tmpPictRouter).to.be.an('object');
+								Expect(tmpPictRouter.router).to.be.an('object');
+								Expect(tmpPictRouter.afterPersistView).to.equal('/Manyfest/Overview');
 								return fDone();
 							}
 						);
 					test(
-							'Create and exercise a route',
+							'Exports default_configuration',
 							(fDone) =>
 							{
-								let tmpPict = new libPict();
-								tmpPict.LogNoisiness = 5;
-								// Initialize the environment
-								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
-								// Create the application
-								let tmpPictApplication = tmpPict.addApplication();
-
-								// Add the router provider
-								// TODO: AddOnce?
-								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory'}, libPictRouter);
-								tmpPictRouter.initialize();
-
-								Expect(tmpPictRouter).to.be.an('object');
-
-								tmpPictRouter.router.on('/Manyfest/Overview/:Scope',
-									(pData) =>
-									{
-										tmpPict.log.info(`Route hit: ${JSON.stringify(pData)}`);
-										Expect(pData.data.Scope).to.equal('ExcusesExcuses');
-										return fDone();
-									});
-								
-								tmpPictRouter.navigate('/Manyfest/Overview/ExcusesExcuses');
+								Expect(libPictRouter.default_configuration).to.be.an('object');
+								Expect(libPictRouter.default_configuration.ProviderIdentifier).to.equal('Pict-Router');
+								Expect(libPictRouter.default_configuration.AutoInitialize).to.equal(true);
+								Expect(libPictRouter.default_configuration.AutoInitializeOrdinal).to.equal(0);
+								return fDone();
 							}
 						);
 					test(
-							'Create and exercise a route with a template',
+							'Constructor with config-driven template routes',
 							(fDone) =>
 							{
 								let tmpPict = new libPict();
-								tmpPict.LogNoisiness = 5;
-								// Initialize the environment
 								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
-								// Create the application
 								let tmpPictApplication = tmpPict.addApplication();
 
-								// Add the router provider
-								let tmpPictRouter = tmpPict.addProvider('PictRouter', 
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
 									{
-										RouterMode: 'memory', 
+										RouterMode: 'memory',
+										Routes:
+										[
+											{
+												path: '/ConfigTemplate/:Id',
+												template: '{~LV:Pict.providers.PictRouter.setConfigRouteHit(Record.data.Id)~}'
+											}
+										]
+									}, libPictRouter);
+
+								tmpPictRouter.ConfigRouteValue = null;
+								tmpPictRouter.setConfigRouteHit = function(pId)
+								{
+									this.ConfigRouteValue = pId;
+									return pId;
+								};
+
+								Expect(tmpPictRouter).to.be.an('object');
+								// Route should have been registered
+								tmpPictRouter.navigate('/ConfigTemplate/42');
+								Expect(tmpPictRouter.ConfigRouteValue).to.equal('42');
+								return fDone();
+							}
+						);
+					test(
+							'Constructor with config-driven render (function) routes',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpRouteData = null;
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										Routes:
+										[
+											{
+												path: '/FuncRoute/:Name',
+												render: function(pData)
+												{
+													tmpRouteData = pData;
+												}
+											}
+										]
+									}, libPictRouter);
+
+								Expect(tmpPictRouter).to.be.an('object');
+								tmpPictRouter.navigate('/FuncRoute/TestName');
+								Expect(tmpRouteData).to.be.an('object');
+								Expect(tmpRouteData.data.Name).to.equal('TestName');
+								return fDone();
+							}
+						);
+					test(
+							'Constructor warns on invalid route config (missing path and template)',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								// Route missing both template and render should log a warning
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										Routes:
+										[
+											{ path: '/NoHandler' },
+											{ template: '{~D:Nothing~}' },
+											{}
+										]
+									}, libPictRouter);
+
+								Expect(tmpPictRouter).to.be.an('object');
+								// Should not crash; invalid routes are simply skipped with a warning
+								return fDone();
+							}
+						);
+					test(
+							'Constructor with no Routes config',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory'
+									}, libPictRouter);
+
+								Expect(tmpPictRouter).to.be.an('object');
+								return fDone();
+							}
+						);
+				}
+			);
+
+		suite
+			(
+				'Route Management',
+				() =>
+				{
+					test(
+							'addRoute with a function renderable',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpHitCount = 0;
+
+								tmpPictRouter.addRoute('/FuncTest',
+									function(pData)
+									{
+										tmpHitCount++;
+									});
+
+								tmpPictRouter.navigate('/FuncTest');
+								Expect(tmpHitCount).to.equal(1);
+								return fDone();
+							}
+						);
+					test(
+							'addRoute with a template renderable',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
 										Routes: []
 									}, libPictRouter);
 
 								tmpPictRouter.TestState = 1;
-
-								Expect(tmpPictRouter).to.be.an('object');
-								Expect(tmpPictRouter.TestState).to.equal(1);
 
 								tmpPictRouter.adjustTestState = function(pState)
 									{
@@ -104,13 +214,403 @@ suite
 
 								tmpPictRouter.initialize();
 
-								Expect(tmpPictRouter).to.be.an('object');
-
 								tmpPictRouter.addRoute('/Test/NewState/:Scope', "{~LV:Pict.providers.PictRouter.adjustTestState(Record.data.Scope)~}");
 								tmpPictRouter.navigate('/Test/NewState/3533');
 								Expect(tmpPictRouter.TestState).to.equal(3533);
 
 								return fDone();
+							}
+						);
+					test(
+							'addRoute with an invalid renderable warns and skips',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								// Number renderable
+								tmpPictRouter.addRoute('/BadRoute1', 42);
+								// Object renderable
+								tmpPictRouter.addRoute('/BadRoute2', { some: 'object' });
+								// Null renderable
+								tmpPictRouter.addRoute('/BadRoute3', null);
+								// Undefined renderable
+								tmpPictRouter.addRoute('/BadRoute4', undefined);
+								// Boolean renderable
+								tmpPictRouter.addRoute('/BadRoute5', true);
+
+								// None of these should crash; they log warnings and return
+								Expect(tmpPictRouter).to.be.an('object');
+								return fDone();
+							}
+						);
+					test(
+							'addRoute with function renderable and route parameters',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory' }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								tmpPictRouter.router.on('/Manyfest/Overview/:Scope',
+									(pData) =>
+									{
+										tmpPict.log.info(`Route hit: ${JSON.stringify(pData)}`);
+										Expect(pData.data.Scope).to.equal('ExcusesExcuses');
+										return fDone();
+									});
+
+								tmpPictRouter.navigate('/Manyfest/Overview/ExcusesExcuses');
+							}
+						);
+				}
+			);
+
+		suite
+			(
+				'RouterSkipRouteResolveOnAdd',
+				() =>
+				{
+					test(
+							'Default behavior: resolve is called during addRoute',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpResolveCallCount = 0;
+								let tmpOriginalResolve = tmpPictRouter.resolve.bind(tmpPictRouter);
+								tmpPictRouter.resolve = function()
+								{
+									tmpResolveCallCount++;
+									tmpOriginalResolve();
+								};
+
+								tmpPictRouter.addRoute('/ResolveTest', function() {});
+								Expect(tmpResolveCallCount).to.equal(1);
+
+								tmpPictRouter.addRoute('/ResolveTest2', '{~D:Something~}');
+								Expect(tmpResolveCallCount).to.equal(2);
+
+								return fDone();
+							}
+						);
+					test(
+							'With setting enabled: resolve is NOT called during addRoute',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								// Set the skip flag before adding the router
+								tmpPict.settings.RouterSkipRouteResolveOnAdd = true;
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpResolveCallCount = 0;
+								let tmpOriginalResolve = tmpPictRouter.resolve.bind(tmpPictRouter);
+								tmpPictRouter.resolve = function()
+								{
+									tmpResolveCallCount++;
+									tmpOriginalResolve();
+								};
+
+								tmpPictRouter.addRoute('/SkipResolve1', function() {});
+								tmpPictRouter.addRoute('/SkipResolve2', '{~D:Something~}');
+								tmpPictRouter.addRoute('/SkipResolve3', function() {});
+
+								Expect(tmpResolveCallCount).to.equal(0);
+
+								return fDone();
+							}
+						);
+					test(
+							'With setting enabled: explicit resolve still works',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								tmpPict.settings.RouterSkipRouteResolveOnAdd = true;
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpRouteHit = false;
+
+								tmpPictRouter.addRoute('/ExplicitResolve', function()
+								{
+									tmpRouteHit = true;
+								});
+
+								// Navigate then resolve explicitly
+								tmpPictRouter.navigate('/ExplicitResolve');
+								Expect(tmpRouteHit).to.equal(true);
+
+								return fDone();
+							}
+						);
+					test(
+							'With setting enabled: invalid renderables still skip resolve',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								tmpPict.settings.RouterSkipRouteResolveOnAdd = true;
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpResolveCallCount = 0;
+								let tmpOriginalResolve = tmpPictRouter.resolve.bind(tmpPictRouter);
+								tmpPictRouter.resolve = function()
+								{
+									tmpResolveCallCount++;
+									tmpOriginalResolve();
+								};
+
+								// Invalid renderable should not call resolve regardless of setting
+								tmpPictRouter.addRoute('/InvalidSkip', 999);
+								Expect(tmpResolveCallCount).to.equal(0);
+
+								return fDone();
+							}
+						);
+					test(
+							'Config-driven routes respect the skip setting',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								tmpPict.settings.RouterSkipRouteResolveOnAdd = true;
+
+								let tmpRouteHit = false;
+
+								// These config-driven routes should NOT trigger resolve during construction
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										Routes:
+										[
+											{
+												path: '/ConfigSkip',
+												render: function() { tmpRouteHit = true; }
+											}
+										]
+									}, libPictRouter);
+
+								// Route was registered but not resolved
+								Expect(tmpRouteHit).to.equal(false);
+
+								// Explicit navigate works
+								tmpPictRouter.navigate('/ConfigSkip');
+								Expect(tmpRouteHit).to.equal(true);
+
+								return fDone();
+							}
+						);
+				}
+			);
+
+		suite
+			(
+				'Navigation',
+				() =>
+				{
+					test(
+							'navigate triggers the matching route handler',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpNavigatedValue = null;
+
+								tmpPictRouter.addRoute('/NavTest/:Value', function(pData)
+								{
+									tmpNavigatedValue = pData.data.Value;
+								});
+
+								tmpPictRouter.navigate('/NavTest/Hello');
+								Expect(tmpNavigatedValue).to.equal('Hello');
+
+								tmpPictRouter.navigate('/NavTest/World');
+								Expect(tmpNavigatedValue).to.equal('World');
+
+								return fDone();
+							}
+						);
+					test(
+							'resolve triggers the handler for the current route',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpResolveHitCount = 0;
+
+								tmpPictRouter.addRoute('/ResolveTarget', function()
+								{
+									tmpResolveHitCount++;
+								});
+
+								tmpPictRouter.navigate('/ResolveTarget');
+								let tmpCountAfterNavigate = tmpResolveHitCount;
+								Expect(tmpCountAfterNavigate).to.be.greaterThan(0);
+
+								return fDone();
+							}
+						);
+				}
+			);
+
+		suite
+			(
+				'Scoped Routes',
+				() =>
+				{
+					test(
+							'currentScope returns Default when AppData is not set up',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory' }, libPictRouter);
+
+								Expect(tmpPictRouter.currentScope).to.equal('Default');
+								return fDone();
+							}
+						);
+					test(
+							'currentScope returns the scope when AppData.ManyfestRecord.Scope is set',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory' }, libPictRouter);
+
+								tmpPictRouter.AppData = { ManyfestRecord: { Scope: 'CustomScope' } };
+								Expect(tmpPictRouter.currentScope).to.equal('CustomScope');
+								return fDone();
+							}
+						);
+					test(
+							'currentScope returns Default when ManyfestRecord exists but Scope is missing',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory' }, libPictRouter);
+
+								tmpPictRouter.AppData = { ManyfestRecord: {} };
+								Expect(tmpPictRouter.currentScope).to.equal('Default');
+								return fDone();
+							}
+						);
+					test(
+							'forwardToScopedRoute navigates to a scoped URL',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								tmpPictRouter.AppData = { ManyfestRecord: { Scope: 'MyScope' } };
+
+								let tmpNavigatedRoute = null;
+
+								tmpPictRouter.addRoute('/ScopedTest/:Scope', function(pData)
+								{
+									tmpNavigatedRoute = pData.data.Scope;
+								});
+
+								tmpPictRouter.forwardToScopedRoute({ url: '/ScopedTest' });
+								Expect(tmpNavigatedRoute).to.equal('MyScope');
+								return fDone();
+							}
+						);
+					test(
+							'forwardToScopedRoute uses Default scope when not configured',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory', Routes: [] }, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpNavigatedRoute = null;
+
+								tmpPictRouter.addRoute('/DefaultScopeTest/:Scope', function(pData)
+								{
+									tmpNavigatedRoute = pData.data.Scope;
+								});
+
+								tmpPictRouter.forwardToScopedRoute({ url: '/DefaultScopeTest' });
+								Expect(tmpNavigatedRoute).to.equal('Default');
+								return fDone();
+							}
+						);
+				}
+			);
+
+		suite
+			(
+				'Initialization',
+				() =>
+				{
+					test(
+							'onInitializeAsync calls back successfully',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter', { RouterMode: 'memory' }, libPictRouter);
+
+								tmpPictRouter.onInitializeAsync(
+									function(pError)
+									{
+										Expect(pError).to.not.exist;
+										return fDone();
+									});
 							}
 						);
 				}
