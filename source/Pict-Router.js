@@ -6,7 +6,13 @@ const _DEFAULT_PROVIDER_CONFIGURATION =
 	ProviderIdentifier: 'Pict-Router',
 
 	AutoInitialize: true,
-	AutoInitializeOrdinal: 0
+	AutoInitializeOrdinal: 0,
+
+	// When true, addRoute() will NOT auto-resolve after each route is added.
+	// This is useful in auth-gated SPAs where routes should only resolve after
+	// the DOM is ready (e.g. after login).  Can also be set globally via
+	// pict.settings.RouterSkipRouteResolveOnAdd — either one enables the skip.
+	SkipRouteResolveOnAdd: false
 }
 
 class PictRouter extends libPictProvider
@@ -83,10 +89,11 @@ class PictRouter extends libPictProvider
 		}
 
 		// By default, resolve after each route is added (legacy behavior).
-		// Applications can set pict.settings.RouterSkipRouteResolveOnAdd = true
-		// to skip this and call resolve() explicitly after the DOM is ready,
-		// which prevents premature route resolution before views are rendered.
-		if (!this.pict.settings.RouterSkipRouteResolveOnAdd)
+		// Applications can skip this by setting SkipRouteResolveOnAdd: true in
+		// the provider config JSON, or globally via
+		// pict.settings.RouterSkipRouteResolveOnAdd.  Either one will prevent
+		// premature route resolution before views are rendered.
+		if (!this.options.SkipRouteResolveOnAdd && !this.pict.settings.RouterSkipRouteResolveOnAdd)
 		{
 			this.resolve();
 		}
@@ -100,6 +107,31 @@ class PictRouter extends libPictProvider
 	navigate(pRoute)
 	{
 		this.router.navigate(pRoute);
+	}
+
+	/**
+	 * Navigate to the route currently in the browser's location hash.
+	 *
+	 * This is useful in auth-gated SPAs: when the user pastes a deep-link
+	 * (e.g. #/Books) and then logs in, calling navigateCurrent() will force
+	 * the router to fire the handler for whatever hash is already in the URL.
+	 * Unlike resolve(), navigate() always triggers the handler even if Navigo
+	 * has already "consumed" that URL.
+	 *
+	 * If the hash is empty or just "#/", this is a no-op and returns false.
+	 *
+	 * @returns {boolean} true if a route was navigated to, false otherwise
+	 */
+	navigateCurrent()
+	{
+		let tmpHash = (typeof (window) !== 'undefined' && window.location) ? window.location.hash : '';
+		if (tmpHash && tmpHash.length > 2 && tmpHash !== '#/')
+		{
+			let tmpRoute = tmpHash.replace(/^#/, '');
+			this.navigate(tmpRoute);
+			return true;
+		}
+		return false;
 	}
 
 	/**

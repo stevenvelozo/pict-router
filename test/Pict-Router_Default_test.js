@@ -430,6 +430,235 @@ suite
 				}
 			);
 
+
+		suite
+			(
+				'Provider-level SkipRouteResolveOnAdd',
+				() =>
+				{
+					test(
+							'SkipRouteResolveOnAdd in provider config skips resolve during addRoute',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								// Do NOT set pict.settings — use the provider option instead
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										SkipRouteResolveOnAdd: true,
+										Routes: []
+									}, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpResolveCallCount = 0;
+								let tmpOriginalResolve = tmpPictRouter.resolve.bind(tmpPictRouter);
+								tmpPictRouter.resolve = function()
+								{
+									tmpResolveCallCount++;
+									tmpOriginalResolve();
+								};
+
+								tmpPictRouter.addRoute('/ProviderSkip1', function() {});
+								tmpPictRouter.addRoute('/ProviderSkip2', '{~D:Something~}');
+								tmpPictRouter.addRoute('/ProviderSkip3', function() {});
+
+								Expect(tmpResolveCallCount).to.equal(0);
+
+								return fDone();
+							}
+						);
+					test(
+							'SkipRouteResolveOnAdd in provider config works with config-driven routes',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpRouteHit = false;
+
+								// Routes in the config should NOT auto-resolve when the option is set
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										SkipRouteResolveOnAdd: true,
+										Routes:
+										[
+											{
+												path: '/ProviderConfigSkip',
+												render: function() { tmpRouteHit = true; }
+											}
+										]
+									}, libPictRouter);
+
+								// Route was registered but not resolved
+								Expect(tmpRouteHit).to.equal(false);
+
+								// Explicit navigate works
+								tmpPictRouter.navigate('/ProviderConfigSkip');
+								Expect(tmpRouteHit).to.equal(true);
+
+								return fDone();
+							}
+						);
+					test(
+							'SkipRouteResolveOnAdd defaults to false in provider config',
+							(fDone) =>
+							{
+								Expect(libPictRouter.default_configuration.SkipRouteResolveOnAdd).to.equal(false);
+								return fDone();
+							}
+						);
+					test(
+							'Provider-level option does not affect resolve when set to false',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								// Explicit false — resolve SHOULD be called
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										SkipRouteResolveOnAdd: false,
+										Routes: []
+									}, libPictRouter);
+								tmpPictRouter.initialize();
+
+								let tmpResolveCount = 0;
+								let tmpOriginalResolve = tmpPictRouter.resolve.bind(tmpPictRouter);
+								tmpPictRouter.resolve = function()
+								{
+									tmpResolveCount++;
+									tmpOriginalResolve();
+								};
+
+								tmpPictRouter.addRoute('/NoSkipTest', function() {});
+								Expect(tmpResolveCount).to.equal(1);
+
+								return fDone();
+							}
+						);
+				}
+			);
+
+		suite
+			(
+				'navigateCurrent',
+				() =>
+				{
+					test(
+							'navigateCurrent returns false when there is no hash',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										SkipRouteResolveOnAdd: true,
+										Routes: []
+									}, libPictRouter);
+
+								// Clear the hash
+								if (typeof (window) !== 'undefined')
+								{
+									window.location.hash = '';
+								}
+
+								let tmpResult = tmpPictRouter.navigateCurrent();
+								Expect(tmpResult).to.equal(false);
+
+								return fDone();
+							}
+						);
+					test(
+							'navigateCurrent returns false when hash is just #/',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										SkipRouteResolveOnAdd: true,
+										Routes: []
+									}, libPictRouter);
+
+								if (typeof (window) !== 'undefined')
+								{
+									window.location.hash = '#/';
+								}
+
+								let tmpResult = tmpPictRouter.navigateCurrent();
+								Expect(tmpResult).to.equal(false);
+
+								return fDone();
+							}
+						);
+					test(
+							'navigateCurrent returns false for empty hash in test environment',
+							(fDone) =>
+							{
+								// In a real browser, navigateCurrent() reads window.location.hash
+								// and calls navigate() with the hash route.  The jsdom test environment
+								// does not support hash assignment, so we verify the negative case here.
+								// Deep-link navigation is validated in the harness_app integration test.
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory',
+										SkipRouteResolveOnAdd: true,
+										Routes: []
+									}, libPictRouter);
+
+								let tmpRouteHit = false;
+								tmpPictRouter.addRoute('/SomeRoute', function()
+								{
+									tmpRouteHit = true;
+								});
+
+								// In the test environment the hash will be empty, so navigateCurrent
+								// should return false and NOT fire any route handler.
+								let tmpResult = tmpPictRouter.navigateCurrent();
+								Expect(tmpResult).to.equal(false);
+								Expect(tmpRouteHit).to.equal(false);
+
+								return fDone();
+							}
+						);
+					test(
+							'navigateCurrent is a function',
+							(fDone) =>
+							{
+								let tmpPict = new libPict();
+								let tmpPictEnvironment = new libPict.EnvironmentObject(tmpPict);
+								let tmpPictApplication = tmpPict.addApplication();
+
+								let tmpPictRouter = tmpPict.addProvider('PictRouter',
+									{
+										RouterMode: 'memory'
+									}, libPictRouter);
+
+								Expect(tmpPictRouter.navigateCurrent).to.be.a('function');
+
+								return fDone();
+							}
+						);
+				}
+			);
+
 		suite
 			(
 				'Navigation',

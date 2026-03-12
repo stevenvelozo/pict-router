@@ -9,6 +9,7 @@
         "tests": "npx quack test -g",
         "coverage": "npx quack coverage",
         "build": "npx quack build",
+        "test-browser": "npx mocha test/Browser_Integration_tests.js --timeout 60000",
         "lint": "eslint source/**",
         "types": "npx -p typescript tsc -p . --outDir types"
     },
@@ -31,6 +32,7 @@
         "browser-env": "^3.3.0",
         "eslint": "^9.14.0",
         "jquery": "^3.7.1",
+        "puppeteer": "^24.38.0",
         "quackage": "^1.0.64",
         "typescript": "^5.6.3"
     },
