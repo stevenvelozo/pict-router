@@ -239,7 +239,7 @@ class MyApp extends libPictApplication
 }
 ```
 
-### 2. Layout View — Resolve on First Render
+### 2. Layout View -- Resolve on First Render
 
 ```javascript
 onAfterRender()
@@ -260,7 +260,7 @@ onAfterRender()
 <a onclick="{~P~}.PictApplication.navigateTo('/About')">About</a>
 ```
 
-### 4. Content Views — Replace Into Shared Container
+### 4. Content Views -- Replace Into Shared Container
 
 ```javascript
 {

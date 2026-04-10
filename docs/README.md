@@ -2,7 +2,7 @@
 
 A Pict provider that wraps the [Navigo](https://www.npmjs.com/package/navigo) router to provide hash-based URL routing for single-page Pict applications. Routes are parsed from the URL fragment after the `#` symbol, so `index.html#/About` maps to the route `/About`.
 
-Routes can be defined in a JSON configuration object or added programmatically. Each route maps a URL pattern to either a callback function or a Pict template expression string. Template routes can call any application method — view renders, provider functions, or custom logic — making it possible to build a full multi-page SPA with nothing more than configuration.
+Routes can be defined in a JSON configuration object or added programmatically. Each route maps a URL pattern to either a callback function or a Pict template expression string. Template routes can call any application method -- view renders, provider functions, or custom logic -- making it possible to build a full multi-page SPA with nothing more than configuration.
 
 ## Quick Start
 
@@ -37,7 +37,7 @@ Create a route configuration file that maps URL paths to template expressions:
 }
 ```
 
-The `{~LV:...~}` syntax is Pict's LogValue template tag — it evaluates the expression when the route matches. Here it calls `showView()` on the application to swap the content view.
+The `{~LV:...~}` syntax is Pict's LogValue template tag -- it evaluates the expression when the route matches. Here it calls `showView()` on the application to swap the content view.
 
 ### 2. Register the Router Provider
 
@@ -117,7 +117,7 @@ The `{~P~}` template tag resolves to the Pict instance name, giving the onclick 
 ## How It Works
 
 1. The router is registered as a Pict provider during app construction
-2. Route definitions from the `Routes` configuration array are processed — each route is registered with Navigo
+2. Route definitions from the `Routes` configuration array are processed -- each route is registered with Navigo
 3. When the layout renders, `resolve()` is called to match the current URL hash
 4. When a user clicks a navigation link, `navigateTo()` calls `router.navigate()`, which updates the URL hash and triggers the matching route handler
 5. Template route handlers call `pict.parseTemplate()` to evaluate the expression, which typically calls `showView()` to swap the content view
@@ -169,9 +169,9 @@ The recommended pattern for routed Pict applications (used by pict-nonlinearconf
 
 ```
 Application
-├── Router Provider (routes → showView calls)
+├── Router Provider (routes -> showView calls)
 ├── Layout View (shell with topbar, content area, footer)
-│   ├── TopBar View (navigation links → navigateTo calls)
+│   ├── TopBar View (navigation links -> navigateTo calls)
 │   ├── Content Container (swapped by router)
 │   │   ├── Home View (RenderMethod: "replace")
 │   │   ├── About View (RenderMethod: "replace")
