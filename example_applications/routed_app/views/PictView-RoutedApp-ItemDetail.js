@@ -21,7 +21,7 @@ const _ViewConfiguration =
 		.routedapp-item-detail .item-id {
 			display: inline-block;
 			background: #e94560;
-			color: #fff;
+			color: var(--theme-color-background-panel, #fff);
 			padding: 0.2em 0.6em;
 			border-radius: 4px;
 			font-size: 0.85em;
@@ -31,13 +31,13 @@ const _ViewConfiguration =
 		.routedapp-item-detail .item-description {
 			font-size: 1.1em;
 			line-height: 1.6;
-			color: #555;
+			color: var(--theme-color-text-secondary, #555);
 			margin-bottom: 1.5em;
 		}
 		.routedapp-item-detail .item-price {
 			font-size: 1.5em;
 			font-weight: 700;
-			color: #27ae60;
+			color: var(--theme-color-status-success, #27ae60);
 			margin-bottom: 1.5em;
 		}
 		.routedapp-item-detail .item-back {

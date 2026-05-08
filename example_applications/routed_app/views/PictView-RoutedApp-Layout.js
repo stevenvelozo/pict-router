@@ -15,7 +15,7 @@ const _ViewConfiguration =
 			flex-direction: column;
 			min-height: 100vh;
 			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-			color: #333;
+			color: var(--theme-color-text-primary, #333);
 		}
 		#RoutedApp-TopBar-Container {
 			flex-shrink: 0;

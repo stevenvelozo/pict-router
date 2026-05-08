@@ -18,7 +18,7 @@ const _ViewConfiguration =
 		.routedapp-home p {
 			font-size: 1.1em;
 			line-height: 1.6;
-			color: #555;
+			color: var(--theme-color-text-secondary, #555);
 			max-width: 640px;
 		}
 		.routedapp-home-cards {
@@ -48,7 +48,7 @@ const _ViewConfiguration =
 		.routedapp-home-card p {
 			margin: 0;
 			font-size: 0.95em;
-			color: #666;
+			color: var(--theme-color-text-secondary, #666);
 		}
 	`,
 

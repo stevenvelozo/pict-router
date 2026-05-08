@@ -15,7 +15,7 @@ const _ViewConfiguration =
 			align-items: center;
 			justify-content: space-between;
 			background-color: #1a1a2e;
-			color: #eee;
+			color: var(--theme-color-border-light, #eee);
 			padding: 0 1.5em;
 			height: 56px;
 			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -40,7 +40,7 @@ const _ViewConfiguration =
 			gap: 0.25em;
 		}
 		.routedapp-topbar-nav a {
-			color: #aaa;
+			color: var(--theme-color-text-muted, #aaa);
 			text-decoration: none;
 			padding: 0.5em 0.85em;
 			border-radius: 4px;
@@ -50,7 +50,7 @@ const _ViewConfiguration =
 		}
 		.routedapp-topbar-nav a:hover {
 			background-color: #16213e;
-			color: #fff;
+			color: var(--theme-color-background-panel, #fff);
 		}
 	`,
 

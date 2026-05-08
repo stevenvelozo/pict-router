@@ -18,7 +18,7 @@ const _ViewConfiguration =
 		.routedapp-contact p {
 			font-size: 1.05em;
 			line-height: 1.6;
-			color: #555;
+			color: var(--theme-color-text-secondary, #555);
 			max-width: 640px;
 			margin-bottom: 1.5em;
 		}
@@ -29,7 +29,7 @@ const _ViewConfiguration =
 			display: block;
 			margin-bottom: 0.3em;
 			font-weight: 600;
-			color: #333;
+			color: var(--theme-color-text-primary, #333);
 		}
 		.routedapp-contact-form input,
 		.routedapp-contact-form textarea {
@@ -37,7 +37,7 @@ const _ViewConfiguration =
 			width: 100%;
 			padding: 0.6em 0.8em;
 			margin-bottom: 1em;
-			border: 1px solid #ccc;
+			border: 1px solid var(--theme-color-border-default, #ccc);
 			border-radius: 4px;
 			font-size: 1em;
 			font-family: inherit;
@@ -49,7 +49,7 @@ const _ViewConfiguration =
 		}
 		.routedapp-contact-form button {
 			background: #e94560;
-			color: #fff;
+			color: var(--theme-color-background-panel, #fff);
 			border: none;
 			padding: 0.7em 1.5em;
 			border-radius: 4px;

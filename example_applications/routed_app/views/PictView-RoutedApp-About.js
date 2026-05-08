@@ -18,7 +18,7 @@ const _ViewConfiguration =
 		.routedapp-about p {
 			font-size: 1.05em;
 			line-height: 1.6;
-			color: #555;
+			color: var(--theme-color-text-secondary, #555);
 			max-width: 640px;
 		}
 		.routedapp-about ul {
@@ -28,10 +28,10 @@ const _ViewConfiguration =
 		.routedapp-about li {
 			margin-bottom: 0.5em;
 			line-height: 1.5;
-			color: #555;
+			color: var(--theme-color-text-secondary, #555);
 		}
 		.routedapp-about code {
-			background: #f0f0f0;
+			background: var(--theme-color-background-tertiary, #f0f0f0);
 			padding: 0.15em 0.4em;
 			border-radius: 3px;
 			font-size: 0.9em;
