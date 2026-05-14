@@ -1,0 +1,18 @@
+{
+	"Hash": "pict-router",
+	"Name": "Pict Router",
+	"Tagline": "Hash-based URL routing via Navigo with template string route functions for Pict applications",
+	"Palette": "mix",
+	"Icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 96 96\" width=\"96\" height=\"96\">\n\t\t<defs>\n\t\t\t<clipPath id=\"frame-pict-router-filled-light\">\n\t\t\t\t<path d=\"M 48.00 2.00 L 87.84 25.00 L 87.84 71.00 L 48.00 94.00 L 8.16 71.00 L 8.16 25.00 Z\"/>\n\t\t\t</clipPath>\n\t\t</defs>\n\t\t<path d=\"M 48.00 2.00 L 87.84 25.00 L 87.84 71.00 L 48.00 94.00 L 8.16 71.00 L 8.16 25.00 Z\" fill=\"#3690d9\"/>\n\t\t<g clip-path=\"url(#frame-pict-router-filled-light)\"><circle cx=\"48\" cy=\"48\" r=\"14\" fill=\"rgba(255,255,255,0.18)\"/><path d=\"M 19.27 62.09 A 32 32 0 0 1 23.44 27.48\" fill=\"none\" stroke=\"rgba(255,255,255,0.18)\" stroke-width=\"6\" stroke-linecap=\"round\"/><path d=\"M 50.17 16.07 A 32 32 0 0 1 78.05 36.99\" fill=\"none\" stroke=\"#de8d4d\" stroke-width=\"6\" stroke-linecap=\"round\"/><path d=\"M 74.57 65.84 A 32 32 0 0 1 42.51 79.53\" fill=\"none\" stroke=\"rgba(255,255,255,0.18)\" stroke-width=\"6\" stroke-linecap=\"round\"/></g>\n\t\t<text x=\"48\" y=\"50\" text-anchor=\"middle\" dominant-baseline=\"central\"\n\t\t\tfont-family=\"-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif\"\n\t\t\tfont-size=\"38\" font-weight=\"700\"\n\t\t\tfill=\"#ffffff\" letter-spacing=\"-1\">PR</text>\n\t</svg>",
+	"IconType": "svg",
+	"Favicon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 96 96\" width=\"96\" height=\"96\">\n\t\t<defs>\n\t\t\t<clipPath id=\"fav-pict-router-light\">\n\t\t\t\t<path d=\"M 48.00 2.00 L 87.84 25.00 L 87.84 71.00 L 48.00 94.00 L 8.16 71.00 L 8.16 25.00 Z\"/>\n\t\t\t</clipPath>\n\t\t</defs>\n\t\t<path d=\"M 48.00 2.00 L 87.84 25.00 L 87.84 71.00 L 48.00 94.00 L 8.16 71.00 L 8.16 25.00 Z\" fill=\"#3690d9\"/>\n\t\t<g clip-path=\"url(#fav-pict-router-light)\"><circle cx=\"48\" cy=\"48\" r=\"36\" fill=\"rgba(255,255,255,0.22)\"/></g>\n\t\t<text x=\"48\" y=\"50\" text-anchor=\"middle\" dominant-baseline=\"central\"\n\t\t\tfont-family=\"-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif\"\n\t\t\tfont-size=\"60\" font-weight=\"800\"\n\t\t\tfill=\"#ffffff\" letter-spacing=\"-1\">P</text>\n\t</svg>",
+	"FaviconDark": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 96 96\" width=\"96\" height=\"96\">\n\t\t<defs>\n\t\t\t<clipPath id=\"fav-pict-router-dark\">\n\t\t\t\t<path d=\"M 48.00 2.00 L 87.84 25.00 L 87.84 71.00 L 48.00 94.00 L 8.16 71.00 L 8.16 25.00 Z\"/>\n\t\t\t</clipPath>\n\t\t</defs>\n\t\t<path d=\"M 48.00 2.00 L 87.84 25.00 L 87.84 71.00 L 48.00 94.00 L 8.16 71.00 L 8.16 25.00 Z\" fill=\"#87bae3\"/>\n\t\t<g clip-path=\"url(#fav-pict-router-dark)\"><circle cx=\"48\" cy=\"48\" r=\"36\" fill=\"rgba(255,255,255,0.22)\"/></g>\n\t\t<text x=\"48\" y=\"50\" text-anchor=\"middle\" dominant-baseline=\"central\"\n\t\t\tfont-family=\"-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif\"\n\t\t\tfont-size=\"60\" font-weight=\"800\"\n\t\t\tfill=\"#101418\" letter-spacing=\"-1\">P</text>\n\t</svg>",
+	"Colors": {
+		"Primary": "#3690d9",
+		"Secondary": "#de8d4d",
+		"PrimaryLight": "#3690d9",
+		"PrimaryDark": "#87bae3",
+		"SecondaryLight": "#de8d4d",
+		"SecondaryDark": "#e9bf9e"
+	}
+}
