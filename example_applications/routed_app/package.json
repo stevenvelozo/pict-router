@@ -10,6 +10,16 @@
 	},
 	"author": "steven velozo <steven@velozo.com>",
 	"license": "MIT",
+	"retold":
+	{
+		"ExampleApplication":
+		{
+			"Stage": true,
+			"Title": "Routed App",
+			"Summary": "Multi-page SPA with hash routing, parameterized routes, and a layout shell that swaps content views into a shared container.",
+			"Complexity": "Intermediate"
+		}
+	},
 	"copyFilesSettings":
 	{
 		"whenFileExists": "overwrite"

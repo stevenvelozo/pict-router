@@ -13,3 +13,9 @@ Navigate between views using URL hash fragments. Define routes in JSON or code, 
 [Quick Start](README.md)
 [API Reference](api.md)
 [GitHub](https://github.com/stevenvelozo/pict-router)
+
+<!-- docuserve:examples:start -->
+| Example | Complexity | Launch |
+|---------|------------|--------|
+| [Routed App](examples/routed%5Fapp/README.md) | Intermediate | [&#9654; Launch](examples/routed%5Fapp/index.html) |
+<!-- docuserve:examples:end -->

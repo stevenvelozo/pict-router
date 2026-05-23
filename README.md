@@ -1,5 +1,7 @@
 # Pict Router
 
+> **[&#9654; Read the Pict-Router Documentation](https://stevenvelozo.github.io/pict-router/)** &mdash; interactive docs with the full API reference.
+
 A hash-based URL router for Pict applications, built on [Navigo](https://www.npmjs.com/package/navigo). Define routes with callback functions or Pict template expressions to drive navigation, view rendering, and application state from the browser URL.
 
 [![Build Status](https://github.com/stevenvelozo/pict-router/workflows/Pict-Router/badge.svg)](https://github.com/stevenvelozo/pict-router/actions)

@@ -1,5 +1,5 @@
 {
-	"Generated": "2026-05-22T05:44:29.060Z",
+	"Generated": "2026-05-23T01:50:37.942Z",
 	"Mode": "module",
 	"GitHubOrg": "stevenvelozo",
 	"DefaultBranch": "master",
@@ -30,31 +30,40 @@
 				]
 			},
 			{
+				"Title": "Examples",
+				"Children": [
+					{
+						"Title": "Routed App",
+						"Path": "examples/routed_app/README.md"
+					}
+				]
+			},
+			{
 				"Title": "Retold Ecosystem",
 				"Children": [
 					{
 						"Title": "Pict",
-						"Path": "pict/pict/README.md"
+						"Path": "https://stevenvelozo.github.io/pict/README.md"
 					},
 					{
 						"Title": "Pict Application",
-						"Path": "pict/pict-application/README.md"
+						"Path": "https://stevenvelozo.github.io/pict-application/README.md"
 					},
 					{
 						"Title": "Pict View",
-						"Path": "pict/pict-view/README.md"
+						"Path": "https://stevenvelozo.github.io/pict-view/README.md"
 					},
 					{
 						"Title": "Pict Provider",
-						"Path": "pict/pict-provider/README.md"
+						"Path": "https://stevenvelozo.github.io/pict-provider/README.md"
 					},
 					{
 						"Title": "Fable",
-						"Path": "fable/fable/README.md"
+						"Path": "https://stevenvelozo.github.io/fable/README.md"
 					},
 					{
 						"Title": "Indoctrinate",
-						"Path": "utility/indoctrinate/README.md"
+						"Path": "https://stevenvelozo.github.io/indoctrinate/README.md"
 					}
 				]
 			}
@@ -68,6 +77,9 @@
 			"_topbar.md",
 			"_version.json",
 			"api.md",
+			"examples/README.md",
+			"examples/routed_app/README.md",
+			"examples/routed_app/index.html",
 			"index.html",
 			"retold-catalog.json",
 			"retold-keyword-index.json"
