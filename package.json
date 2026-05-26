@@ -15,14 +15,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/stevenvelozo/pict-router.git"
+        "url": "git+https://github.com/fable-retold/pict-router.git"
     },
     "author": "steven velozo <steven@velozo.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/stevenvelozo/pict-router/issues"
+        "url": "https://github.com/fable-retold/pict-router/issues"
     },
-    "homepage": "https://github.com/stevenvelozo/pict-router#readme",
+    "homepage": "https://github.com/fable-retold/pict-router#readme",
     "dependencies": {
         "navigo": "^8.11.1",
         "pict-provider": "^1.0.13"

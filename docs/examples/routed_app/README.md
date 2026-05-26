@@ -537,7 +537,7 @@ work for the routing because the routes are URL-fragment based.
 - [API Reference](../../api.md) — methods (`addRoute`, `navigate`,
   `resolve`, `forwardToScopedRoute`), route pattern syntax, and the
   full configuration shape
-- [Pict Application](https://stevenvelozo.github.io/pict-application/)
+- [Pict Application](https://fable-retold.github.io/pict-application/)
   — the application container the router plugs into
-- [Pict View](https://stevenvelozo.github.io/pict-view/) — the view
+- [Pict View](https://fable-retold.github.io/pict-view/) — the view
   class every content view in this example extends

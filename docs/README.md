@@ -188,6 +188,6 @@ A working example application is included in the `example_applications/routed_ap
 ## Learn More
 
 - [API Reference](api.md) -- Methods, properties, and route pattern syntax
-- [Pict Application](https://stevenvelozo.github.io/pict-application/) -- The application container
-- [Pict View](https://stevenvelozo.github.io/pict-view/) -- Views that routes render
-- [Pict Provider](https://stevenvelozo.github.io/pict-provider/) -- The base provider class
+- [Pict Application](https://fable-retold.github.io/pict-application/) -- The application container
+- [Pict View](https://fable-retold.github.io/pict-view/) -- Views that routes render
+- [Pict Provider](https://fable-retold.github.io/pict-provider/) -- The base provider class

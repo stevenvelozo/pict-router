@@ -1,10 +1,10 @@
 # Pict Router
 
-> **[&#9654; Read the Pict-Router Documentation](https://stevenvelozo.github.io/pict-router/)** &mdash; interactive docs with the full API reference.
+> **[&#9654; Read the Pict-Router Documentation](https://fable-retold.github.io/pict-router/)** &mdash; interactive docs with the full API reference.
 
 A hash-based URL router for Pict applications, built on [Navigo](https://www.npmjs.com/package/navigo). Define routes with callback functions or Pict template expressions to drive navigation, view rendering, and application state from the browser URL.
 
-[![Build Status](https://github.com/stevenvelozo/pict-router/workflows/Pict-Router/badge.svg)](https://github.com/stevenvelozo/pict-router/actions)
+[![Build Status](https://github.com/fable-retold/pict-router/workflows/Pict-Router/badge.svg)](https://github.com/fable-retold/pict-router/actions)
 [![npm version](https://badge.fury.io/js/pict-router.svg)](https://badge.fury.io/js/pict-router)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -113,10 +113,10 @@ Trigger the router's resolution logic against the current URL. Called automatica
 
 Pict Router is designed to work with other Pict packages:
 
-- [pict](https://github.com/stevenvelozo/pict) - UI framework
-- [pict-provider](https://github.com/stevenvelozo/pict-provider) - Provider base class
-- [pict-template](https://github.com/stevenvelozo/pict-template) - Template engine for expression routes
-- [fable](https://github.com/stevenvelozo/fable) - Application services framework
+- [pict](https://github.com/fable-retold/pict) - UI framework
+- [pict-provider](https://github.com/fable-retold/pict-provider) - Provider base class
+- [pict-template](https://github.com/fable-retold/pict-template) - Template engine for expression routes
+- [fable](https://github.com/fable-retold/fable) - Application services framework
 
 ## Testing
 
@@ -134,9 +134,9 @@ npm run coverage
 
 ## Related Packages
 
-- [pict](https://github.com/stevenvelozo/pict) - MVC application framework
-- [pict-provider](https://github.com/stevenvelozo/pict-provider) - Data provider base class
-- [fable](https://github.com/stevenvelozo/fable) - Application services framework
+- [pict](https://github.com/fable-retold/pict) - MVC application framework
+- [pict-provider](https://github.com/fable-retold/pict-provider) - Data provider base class
+- [fable](https://github.com/fable-retold/fable) - Application services framework
 
 ## License
 
