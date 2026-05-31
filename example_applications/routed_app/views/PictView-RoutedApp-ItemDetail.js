@@ -62,7 +62,7 @@ const _ViewConfiguration =
 	<span class="item-id">Item #{~D:AppData.RoutedApp.CurrentItem.Id~}</span>
 	<h1>{~D:AppData.RoutedApp.CurrentItem.Name~}</h1>
 	<p class="item-description">{~D:AppData.RoutedApp.CurrentItem.Description~}</p>
-	<div class="item-price">${~D:AppData.RoutedApp.CurrentItem.Price~}</div>
+	<div class="item-price">\${~D:AppData.RoutedApp.CurrentItem.Price~}</div>
 	<a class="item-back" onclick="{~P~}.PictApplication.navigateTo('/Home')">&larr; Back to Home</a>
 </div>
 `
