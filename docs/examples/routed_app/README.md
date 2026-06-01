@@ -1,7 +1,7 @@
-# Routed App — Hash Routing, Parameterized Routes, Shared Content Shell
+# Routed App - Hash Routing, Parameterized Routes, Shared Content Shell
 
 <!-- docuserve:example-launch:start -->
-> **[&#9654; Launch the live app](examples/routed%5Fapp/index.html)** — runs in your browser, opens in a new tab.
+> **[Launch the live app](examples/routed%5Fapp/index.html)** - runs in your browser, opens in a new tab.
 <!-- docuserve:example-launch:end -->
 
 The Routed App example is the reference for adopting `pict-router` in a
@@ -25,45 +25,45 @@ Pict application.
 
 | Capability | Where you see it |
 |------------|------------------|
-| JSON-defined routes registered as a Pict provider | `providers/PictRouter-RoutedApp-Configuration.json` + `this.pict.addProvider('PictRouter', require(…), libPictRouter)` |
+| JSON-defined routes registered as a Pict provider | `providers/PictRouter-RoutedApp-Configuration.json` + `this.pict.addProvider('PictRouter', require(...), libPictRouter)` |
 | **Template routes** that call application methods | `"template": "{~LV:Pict.PictApplication.showView(\`RoutedApp-Home\`)~}"` in the route config |
-| **Parameterized routes** with named segments | `"path": "/Items/:ItemId"` — the segment is available as `Record.data.ItemId` inside the template |
+| **Parameterized routes** with named segments | `"path": "/Items/:ItemId"` - the segment is available as `Record.data.ItemId` inside the template |
 | Programmatic navigation that updates the URL hash | `navigateTo(pRoute)` wraps `this.pict.providers.PictRouter.navigate(pRoute)` |
 | Layout shell pattern (top bar + content area) | `PictView-RoutedApp-Layout.js` renders a topbar div + content div, then renders TopBar + default content + calls `router.resolve()` |
-| Shared content container with `RenderMethod: "replace"` | Every content view targets `#RoutedApp-Content-Container` and replaces its contents — the router effectively swaps views in and out |
+| Shared content container with `RenderMethod: "replace"` | Every content view targets `#RoutedApp-Content-Container` and replaces its contents - the router effectively swaps views in and out |
 | Initial-hash resolution after first render | `if (this.pict.providers.PictRouter) { this.pict.providers.PictRouter.resolve(); }` in the layout's `onAfterRender` |
-| Inline `onclick` navigation links | `<a onclick="{~P~}.PictApplication.navigateTo('/Home')">` — no event listeners, survives every re-render |
+| Inline `onclick` navigation links | `<a onclick="{~P~}.PictApplication.navigateTo('/Home')">` - no event listeners, survives every re-render |
 | URL parameter access via template tag | `{~D:AppData.RoutedApp.CurrentItem.Id~}` in `PictView-RoutedApp-ItemDetail.js` reads what `showItem(pItemId)` planted in AppData |
 
 ## Key files
 
-- `Routed-App-Application.js` — the host. Constructor registers the
+- `Routed-App-Application.js` - the host. Constructor registers the
   router provider, the layout view, the top bar, the four content
   views; `onAfterInitializeAsync` seeds `AppData.RoutedApp` and renders
   the layout (which triggers everything else). `navigateTo`,
   `showView`, and `showItem` are the three application methods the
   routes ultimately call.
-- `Routed-App-Application-Configuration.json` — the application config
+- `Routed-App-Application-Configuration.json` - the application config
   with `MainViewportViewIdentifier` etc. wired up.
-- `providers/PictRouter-RoutedApp-Configuration.json` — the four route
+- `providers/PictRouter-RoutedApp-Configuration.json` - the four route
   entries: three template routes (`/Home`, `/About`, `/Contact`) and
   one parameterized route (`/Items/:ItemId`).
-- `views/PictView-RoutedApp-Layout.js` — the shell. CSS for the column
+- `views/PictView-RoutedApp-Layout.js` - the shell. CSS for the column
   layout, a template with two destination divs, and an `onAfterRender`
   that triggers the top bar, the default content, the CSS injection,
   and the router resolve.
-- `views/PictView-RoutedApp-TopBar.js` — sticky nav bar. Brand link
+- `views/PictView-RoutedApp-TopBar.js` - sticky nav bar. Brand link
   navigates to `/Home`; six links navigate to the three template
   routes and the three sample item-detail routes.
 - `views/PictView-RoutedApp-Home.js` /
   `PictView-RoutedApp-About.js` /
-  `PictView-RoutedApp-Contact.js` — the three template-route content
+  `PictView-RoutedApp-Contact.js` - the three template-route content
   views. Each renders into `#RoutedApp-Content-Container` with
   `RenderMethod: "replace"`, so they swap each other out.
-- `views/PictView-RoutedApp-ItemDetail.js` — the parameterized-route
+- `views/PictView-RoutedApp-ItemDetail.js` - the parameterized-route
   content view. Reads `AppData.RoutedApp.CurrentItem.*` and displays
   the item.
-- `html/index.html` — the shell. One `<div id="RoutedApp-Container">`
+- `html/index.html` - the shell. One `<div id="RoutedApp-Container">`
   and a `<script src="./routed_app.min.js">` is the whole document
   body.
 
@@ -84,10 +84,10 @@ this.pict.AppData.RoutedApp =
 };
 ```
 
-- `CurrentRoute` — set by `showView` / `showItem` so the UI (or the
+- `CurrentRoute` - set by `showView` / `showItem` so the UI (or the
   panel) can tell which view is active.
-- `Items` — keyed by the same string the URL uses
-  (`/Items/2` → `Items['2']`). The parameterized route handler looks
+- `Items` - keyed by the same string the URL uses
+  (`/Items/2` -> `Items['2']`). The parameterized route handler looks
   it up and stamps it into `AppData.RoutedApp.CurrentItem`.
 
 For a real app the `Items` map would come from `onLoadDataAsync` in a
@@ -96,7 +96,7 @@ example runs without any network.
 
 ---
 
-## Feature 1 — Routes as JSON, registered as a provider
+## Feature 1 - Routes as JSON, registered as a provider
 
 The router is a Pict provider, so it slots into the constructor the
 same way every other provider does. The route table itself is a JSON
@@ -124,7 +124,7 @@ class RoutedAppApplication extends libPictApplication
 		this.pict.addView('RoutedApp-Contact', libViewContact.default_configuration, libViewContact);
 		this.pict.addView('RoutedApp-ItemDetail', libViewItemDetail.default_configuration, libViewItemDetail);
 	}
-	// …
+	// ...
 }
 ```
 
@@ -160,16 +160,16 @@ The route file declares the provider identifier and the four routes:
 ```
 
 `AutoInitialize: true` makes the provider register every route during
-`PictApplication.initialize()` — without that, the router would exist
+`PictApplication.initialize()` - without that, the router would exist
 but Navigo would have no routes to match against. Reading routes from
 JSON keeps the constructor short and (importantly) gives any toolchain
 that builds the app a single inspectable file for the route map.
 
-## Feature 2 — Template routes call application methods
+## Feature 2 - Template routes call application methods
 
 A `"template"` route is a string that gets evaluated by
-`pict.parseTemplate()` whenever the route matches. The `{~LV:…~}` tag
-is Pict's "log-value" template tag — it evaluates the JS expression
+`pict.parseTemplate()` whenever the route matches. The `{~LV:...~}` tag
+is Pict's "log-value" template tag - it evaluates the JS expression
 inside and emits its return value (mostly a side-effect mechanism for
 routing; we don't care about the emitted value, we care about the
 call).
@@ -200,13 +200,13 @@ showView(pViewIdentifier)
 ```
 
 `showView` could just as easily call `pict.providers.MyDataProvider.refresh()`
-first, then render. The template-route mechanism doesn't care — it
+first, then render. The template-route mechanism doesn't care - it
 gives you a hook the framework triggers, and you decide what the host
 should do. The bookend lesson: **routes are configuration; behavior is
 methods on the application**. Don't fight that split; it's what makes
 the route file deployable as data.
 
-## Feature 3 — Parameterized routes capture URL segments
+## Feature 3 - Parameterized routes capture URL segments
 
 Replacing a literal path segment with `:ParamName` makes the route
 match any value at that position and exposes it inside the template:
@@ -218,8 +218,8 @@ match any value at that position and exposes it inside the template:
 }
 ```
 
-Navigo parses `#/Items/2` → `{ ItemId: '2' }`; the router passes that
-object as the record when evaluating the template; inside `{~LV:…~}`
+Navigo parses `#/Items/2` -> `{ ItemId: '2' }`; the router passes that
+object as the record when evaluating the template; inside `{~LV:...~}`
 the expression sees `Record.data.ItemId === '2'` and the call becomes
 `showItem('2')`.
 
@@ -247,7 +247,7 @@ showItem(pItemId)
 ```
 
 The item-detail view then reads `AppData.RoutedApp.CurrentItem.*`
-directly in its template — there is no rebuild step, just normal Pict
+directly in its template - there is no rebuild step, just normal Pict
 data binding:
 
 ```html
@@ -261,13 +261,13 @@ data binding:
 ```
 
 The same view template renders three different items. Try
-`#/Items/1`, `#/Items/2`, `#/Items/3` — the URL drives the data, the
+`#/Items/1`, `#/Items/2`, `#/Items/3` - the URL drives the data, the
 view re-uses itself. That's the productivity payoff of parameterized
 routes: one view, N parameter values, no per-route boilerplate.
 
-## Feature 4 — Layout shell pattern + `resolve()` on first render
+## Feature 4 - Layout shell pattern + `resolve()` on first render
 
-The layout view is the canonical "shell" — it renders a top bar
+The layout view is the canonical "shell" - it renders a top bar
 container and a content container, and on its `onAfterRender` it
 triggers everything else:
 
@@ -313,7 +313,7 @@ const _ViewConfiguration =
 		}
 	],
 
-	Renderables: [ /* … */ ]
+	Renderables: [ /* ... */ ]
 };
 
 class RoutedAppLayoutView extends libPictView
@@ -351,7 +351,7 @@ The four things `onAfterRender` does, in order:
    `CSSMap`; one call flushes the combined cascade into the
    `<style id="PICT-CSS">` block.
 4. **Call `router.resolve()`.** If the URL has a fragment (`#/About`,
-   `#/Items/2`, …), this is when the matching template runs and the
+   `#/Items/2`, ...), this is when the matching template runs and the
    correct content view is rendered over the just-drawn Home.
 
 Resolve order matters: `resolve()` is the **last** call so the DOM is
@@ -359,7 +359,7 @@ already populated when the router's handler fires. If `resolve()` ran
 before the top bar / default content rendered, the route handler would
 try to render content into a destination that didn't exist yet.
 
-## Feature 5 — Shared content container with `RenderMethod: "replace"`
+## Feature 5 - Shared content container with `RenderMethod: "replace"`
 
 The "swap views in and out" trick is just `RenderMethod: "replace"` on
 the same destination, applied identically across every content view.
@@ -378,10 +378,10 @@ Renderables:
 ]
 ```
 
-The router doesn't know about this; it just calls `showView(…)` or
-`showItem(…)` and the application method calls `view.render()`. The
+The router doesn't know about this; it just calls `showView(...)` or
+`showItem(...)` and the application method calls `view.render()`. The
 view's `Renderables` configuration handles the rest. Every view also
-sets `AutoRender: false` — they only render when explicitly invoked
+sets `AutoRender: false` - they only render when explicitly invoked
 (by the application's render in the layout, by the router via
 `showView`, or by another view's `onAfterRender`).
 
@@ -389,7 +389,7 @@ This is also why the top bar can stay sticky: it lives in
 `#RoutedApp-TopBar-Container`, a separate div. Only the content
 container is being replaced.
 
-## Feature 6 — Navigation handlers as inline `onclick`
+## Feature 6 - Navigation handlers as inline `onclick`
 
 Every navigation link uses an inline `onclick="..."` that calls the
 application method. No `addEventListener`, no event delegation. The
@@ -410,7 +410,7 @@ top bar template:
 ```
 
 `{~P~}` expands to the Pict instance variable name (`_Pict` by
-default) — `_Pict.PictApplication.navigateTo('/About')` is what the
+default) - `_Pict.PictApplication.navigateTo('/About')` is what the
 browser actually fires.
 
 `navigateTo` is a one-liner on the application:
@@ -422,23 +422,23 @@ navigateTo(pRoute)
 }
 ```
 
-That's the entire call. `router.navigate(…)` updates the URL hash,
+That's the entire call. `router.navigate(...)` updates the URL hash,
 pushes a history entry (so browser back/forward works), and triggers
-the matching route handler — which then re-enters `showView` or
+the matching route handler - which then re-enters `showView` or
 `showItem`. Same code path as a deep-link load.
 
 Inline `onclick` is the standard for Pict because templates re-render
-frequently — every `render()` blows away the DOM nodes, and any
+frequently - every `render()` blows away the DOM nodes, and any
 listeners attached via `addEventListener` would go with them. Inline
 handlers live in the template HTML and survive every re-render. See
 the [main module CLAUDE guide](../../README.md) for the framework's
 position on this.
 
-## Feature 7 — Bootstrapping data and triggering the first render
+## Feature 7 - Bootstrapping data and triggering the first render
 
 The application's `onAfterInitializeAsync` seeds the data the routes
 need and triggers the layout. The router doesn't need an explicit
-poke here — it autoinitializes via its provider configuration and the
+poke here - it autoinitializes via its provider configuration and the
 layout's `onAfterRender` runs `resolve()`:
 
 ```javascript
@@ -464,10 +464,10 @@ onAfterInitializeAsync(fCallback)
 ```
 
 Two lines do the work: seed AppData, render the layout. The rest
-falls out of the framework's chained hooks — the layout's
+falls out of the framework's chained hooks - the layout's
 `onAfterRender` brings up the top bar, the default content, and the
 router. Calling `super.onAfterInitializeAsync(fCallback)` is mandatory
-— skip it and the lifecycle stops there.
+- skip it and the lifecycle stops there.
 
 ## Running the example
 
@@ -479,7 +479,7 @@ npm run build
 ```
 
 The build produces `dist/routed_app.min.js`, `dist/index.html`, and a
-copy of `dist/js/pict.min.js`. No server required — `file://` URLs
+copy of `dist/js/pict.min.js`. No server required - `file://` URLs
 work for the routing because the routes are URL-fragment based.
 
 ## Things to try in the running app
@@ -491,20 +491,20 @@ work for the routing because the routes are URL-fragment based.
   `#/Items/<n>`; the ItemDetail view renders with that item's name,
   description, price. The same view template is being re-used for
   every item.
-- **Type a URL fragment directly** — open the browser, edit the URL
+- **Type a URL fragment directly** - open the browser, edit the URL
   to `index.html#/Items/3`, press Enter. The route resolves on first
   load (that's what the layout's `router.resolve()` call buys you)
   and you land on Item 3.
-- **Type a bogus item id** — `index.html#/Items/99`. `showItem` falls
+- **Type a bogus item id** - `index.html#/Items/99`. `showItem` falls
   back to Home and logs a warning to the console. Add the warning
   message to your debugging mental model: bad parameters don't crash
   the app, they go through the application's fallback path.
-- **Use browser back/forward.** Navigate Home → About → Contact, then
+- **Use browser back/forward.** Navigate Home -> About -> Contact, then
   press the back button repeatedly. Each step replays the matching
   route and renders the previous view. Navigo's history integration
   is free.
 - **Click "Back to Home"** on an item detail page. It calls the same
-  `navigateTo('/Home')` the brand link does — no special "return"
+  `navigateTo('/Home')` the brand link does - no special "return"
   logic in the view.
 
 ## Takeaways
@@ -513,13 +513,13 @@ work for the routing because the routes are URL-fragment based.
    entries is the entire route table. The framework reads it once
    during provider auto-initialize; there is nothing else to register.
 2. **Behaviors are methods on the application.** Template routes call
-   `Pict.PictApplication.<method>(…)`. The application class owns the
+   `Pict.PictApplication.<method>(...)`. The application class owns the
    verbs (`navigateTo`, `showView`, `showItem`); the router owns the
    matching.
 3. **Parameterized routes capture once, read everywhere.** A `:Param`
    becomes `Record.data.Param` in the route's template expression and
    typically lands in `AppData` so view templates can keep reading
-   normally via `{~D:AppData…~}`.
+   normally via `{~D:AppData...~}`.
 4. **`resolve()` after first render is the deep-link unlock.** Without
    it, navigating to `index.html#/About` directly would land you on
    the default view. With it, the router catches up with the URL on
@@ -532,12 +532,12 @@ work for the routing because the routes are URL-fragment based.
 
 ## Related documentation
 
-- [Pict Router — Overview](../../README.md) — the README walks through
+- [Pict Router - Overview](../../README.md) - the README walks through
   the same patterns at a higher level
-- [API Reference](../../api.md) — methods (`addRoute`, `navigate`,
+- [API Reference](../../api.md) - methods (`addRoute`, `navigate`,
   `resolve`, `forwardToScopedRoute`), route pattern syntax, and the
   full configuration shape
 - [Pict Application](https://fable-retold.github.io/pict-application/)
-  — the application container the router plugs into
-- [Pict View](https://fable-retold.github.io/pict-view/) — the view
+  - the application container the router plugs into
+- [Pict View](https://fable-retold.github.io/pict-view/) - the view
   class every content view in this example extends
