@@ -4,9 +4,7 @@
 
 A hash-based URL router for Pict applications, built on [Navigo](https://www.npmjs.com/package/navigo). Define routes with callback functions or Pict template expressions to drive navigation, view rendering, and application state from the browser URL.
 
-[![Build Status](https://github.com/fable-retold/pict-router/workflows/Pict-Router/badge.svg)](https://github.com/fable-retold/pict-router/actions)
-[![npm version](https://badge.fury.io/js/pict-router.svg)](https://badge.fury.io/js/pict-router)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[pict-router on npm](https://www.npmjs.com/package/pict-router) | [MIT License](LICENSE)
 
 ---
 
