@@ -1,5 +1,5 @@
 {
-	"Generated": "2026-05-26T21:12:57.814Z",
+	"Generated": "2026-06-01T03:46:28.572Z",
 	"Mode": "module",
 	"GitHubOrg": "fable-retold",
 	"DefaultBranch": "master",
@@ -80,6 +80,8 @@
 			"examples/README.md",
 			"examples/routed_app/README.md",
 			"examples/routed_app/index.html",
+			"examples/routed_app/js/pict.min.js",
+			"examples/routed_app/routed_app.min.js",
 			"index.html",
 			"retold-catalog.json",
 			"retold-keyword-index.json"
