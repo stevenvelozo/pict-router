@@ -167,17 +167,8 @@ Navigating to `#/Products/Electronics/42` calls `showProduct('Electronics', '42'
 
 The recommended pattern for routed Pict applications (used by pict-nonlinearconfig):
 
-```
-Application
-├── Router Provider (routes -> showView calls)
-├── Layout View (shell with topbar, content area, footer)
-│   ├── TopBar View (navigation links -> navigateTo calls)
-│   ├── Content Container (swapped by router)
-│   │   ├── Home View (RenderMethod: "replace")
-│   │   ├── About View (RenderMethod: "replace")
-│   │   └── Settings View (RenderMethod: "replace")
-│   └── Footer View
-```
+<!-- bespoke diagram: edit diagrams/architecture-pattern.mmd or .hints.json, then: npx pict-renderer-graph build modules/pict/pict-router/docs -->
+![Architecture Pattern](diagrams/architecture-pattern.svg)
 
 Content views all render into the same `#Content-Container` with `RenderMethod: "replace"`, so the router effectively swaps them in and out.
 

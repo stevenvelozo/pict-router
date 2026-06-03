@@ -1,0 +1,9 @@
+Application
+├── Router Provider (routes -> showView calls)
+├── Layout View (shell with topbar, content area, footer)
+│   ├── TopBar View (navigation links -> navigateTo calls)
+│   ├── Content Container (swapped by router)
+│   │   ├── Home View (RenderMethod: "replace")
+│   │   ├── About View (RenderMethod: "replace")
+│   │   └── Settings View (RenderMethod: "replace")
+│   └── Footer View
